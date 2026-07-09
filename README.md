@@ -1,199 +1,292 @@
-aqui se vera el archivo index que se uso para ver la pagina.
+<div align="center">
 
-<!DOCTYPE html>
-<html lang="es">
+# 🌡️ Sistema IoT de Monitoreo de Temperatura y Humedad
 
-<head>
-    <meta charset="UTF-8">
-    <title>Monitor IoT</title>
+### ESP32 • DHT11 • Flask • Supabase • HTML • Python
 
-    <meta http-equiv="refresh" content="5">
+Sistema IoT desarrollado para el monitoreo de temperatura y humedad utilizando una tarjeta ESP32, un sensor DHT11 y un servidor Flask encargado de recibir, visualizar y almacenar la información en Supabase.
 
-    <style>
-
-        body{
-            background:#111;
-            color:#00ff88;
-            font-family:Consolas, monospace;
-            padding:30px;
-        }
-
-        .contenedor{
-            width:900px;
-            margin:auto;
-            border:2px solid #00ff88;
-            padding:25px;
-        }
-
-        h1{
-            text-align:center;
-            margin-bottom:30px;
-        }
-
-        .estado{
-            border:1px solid #00ff88;
-            padding:20px;
-            font-size:22px;
-        }
-
-        .leds{
-
-            margin-top:30px;
-            display:flex;
-            justify-content:space-around;
-
-        }
-
-        .led{
-
-            width:80px;
-            height:80px;
-            border-radius:50%;
-            background:#333;
-            border:4px solid #555;
-
-        }
-
-        .verde{
-
-            background:lime;
-            box-shadow:0 0 25px lime;
-
-        }
-
-        .amarillo{
-
-            background:yellow;
-            box-shadow:0 0 25px yellow;
-
-        }
-
-        .rojo{
-
-            background:red;
-            box-shadow:0 0 25px red;
-
-        }
-
-        .texto{
-
-            text-align:center;
-            margin-top:10px;
-            font-size:18px;
-
-        }
-
-        table{
-
-            width:100%;
-            margin-top:30px;
-            border-collapse:collapse;
-
-        }
-
-        th{
-
-            background:#00aa55;
-
-        }
-
-        td,th{
-
-            border:1px solid #00ff88;
-            padding:10px;
-            text-align:center;
-
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-<div class="contenedor">
-
-<h1>MONITOR IoT - ESP32 + DHT11</h1>
-
-<div class="estado">
-
-<p><b>Temperatura:</b> {{ dato.temperatura }} °C</p>
-
-<p><b>Humedad:</b> {{ dato.humedad }} %</p>
-
-<p><b>Estado:</b> {{ dato.estado }}</p>
-
-<p><b>Fecha:</b> {{ dato.fecha }}</p>
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![ESP32](https://img.shields.io/badge/ESP32-IoT-red)
+![Flask](https://img.shields.io/badge/Flask-Web-black?logo=flask)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase)
+![HTTP](https://img.shields.io/badge/Protocol-HTTP-orange)
 
 </div>
 
+---
 
-<h2 style="text-align:center;">Indicadores LED</h2>
+# 📑 Índice
 
-<div class="leds">
+- Descripción
+- Objetivos
+- Arquitectura del sistema
+- Hardware utilizado
+- Software utilizado
+- Funcionamiento
+- Dashboard Web
+- Base de datos Supabase
+- Montaje del Hardware
+- Comunicación
+- Estructura del proyecto
+- Instalación
+- Ejecución
+- Resultados
+- Mejoras futuras
+- Autor
 
-<div>
+---
 
-<div class="led {% if dato.estado == 'FRIO' %}verde{% endif %}"></div>
+# 📖 Descripción
 
-<div class="texto">LED VERDE</div>
+Este proyecto consiste en el desarrollo de un sistema IoT capaz de monitorear temperatura y humedad utilizando un sensor DHT11 conectado a una tarjeta ESP32.
 
-</div>
+La información obtenida por el sensor es procesada por la ESP32, la cual activa distintos indicadores luminosos (LEDs) dependiendo del rango de temperatura detectado.
 
-<div>
+Posteriormente los datos son enviados mediante el protocolo HTTP hacia un servidor desarrollado en Flask.
 
-<div class="led {% if dato.estado == 'NORMAL' %}amarillo{% endif %}"></div>
+El servidor recibe la información, la procesa, la almacena en una base de datos Supabase y la presenta en una interfaz web desarrollada en HTML.
 
-<div class="texto">LED AMARILLO</div>
+---
 
-</div>
+# 🎯 Objetivos
 
-<div>
+## Objetivo General
 
-<div class="led {% if dato.estado == 'CALOR' %}rojo{% endif %}"></div>
+Diseñar e implementar un sistema IoT capaz de adquirir variables ambientales, procesarlas y almacenarlas en la nube para su monitoreo en tiempo real.
 
-<div class="texto">LED ROJO</div>
+## Objetivos Específicos
 
-</div>
+- Leer temperatura y humedad mediante un sensor DHT11.
+- Procesar la información utilizando una ESP32.
+- Activar indicadores LED según la temperatura.
+- Enviar datos utilizando HTTP.
+- Mostrar información en una interfaz web.
+- Registrar todas las mediciones en Supabase.
 
-</div>
+---
 
+# 🏗 Arquitectura del Sistema
 
-<h2>Historial</h2>
+```text
+          DHT11
+            │
+            │
+            ▼
+         ESP32
+            │
+      HTTP (JSON)
+            │
+            ▼
+      Servidor Flask
+            │
+            ▼
+        Supabase
+            │
+            ▼
+     Dashboard HTML
+```
 
-<table>
+---
 
-<tr>
+# 🔧 Hardware utilizado
 
-<th>Fecha</th>
+- ESP32 Dev Module
+- Sensor DHT11
+- LED Verde
+- LED Amarillo
+- LED Rojo
+- Resistencias 220 Ω
+- Protoboard
+- Cables Dupont
+- Cable USB
 
-<th>Temperatura</th>
+---
 
-<th>Humedad</th>
+# 💻 Software utilizado
 
-<th>Estado</th>
+- Arduino IDE
+- Python 3
+- Flask
+- HTML5
+- CSS3
+- Supabase
+- Debian 11
+- VirtualBox
+- GitHub
 
-</tr>
+---
 
-{% for item in historial %}
+# ⚙ Funcionamiento del Sistema
 
-<tr>
+Cada cinco segundos la ESP32 realiza una lectura del sensor DHT11.
 
-<td>{{ item.fecha }}</td>
+Dependiendo del valor de temperatura obtenido, se activa un único LED representando el estado térmico del ambiente.
 
-<td>{{ item.temperatura }} °C</td>
+Posteriormente se genera un objeto JSON que es enviado mediante HTTP hacia Flask.
 
-<td>{{ item.humedad }} %</td>
+Flask recibe la información, actualiza el Dashboard y almacena el registro en Supabase.
 
-<td>{{ item.estado }}</td>
+---
 
-</tr>
+# 🚦 Estados del Sistema
 
-{% endfor %}
+| Temperatura | Estado | LED |
+|-------------|---------|-----|
+| < 20°C | FRÍO | 🟢 Verde |
+| 20°C - 30°C | NORMAL | 🟡 Amarillo |
+| > 30°C | CALOR | 🔴 Rojo |
 
-</table>
+---
 
-</div>
+# 🖥 Dashboard Web
 
-</body>
-</html>
+<p align="center">
+<img src="images/dashboard.png" width="900">
+</p>
+
+**Figura 1.** Dashboard desarrollado en Flask donde se muestran las mediciones en tiempo real, el historial y el indicador visual del LED activo.
+
+---
+
+# ☁ Base de Datos Supabase
+
+<p align="center">
+<img src="images/supabase.png" width="950">
+</p>
+
+**Figura 2.** Registro de todas las mediciones almacenadas en Supabase.
+
+Cada registro contiene:
+
+- Fecha
+- Temperatura
+- Humedad
+- Estado
+
+---
+
+# 🔌 Montaje del Hardware
+
+<p align="center">
+<img src="images/hardware.jpg" width="500">
+</p>
+
+**Figura 3.** Montaje del prototipo utilizando ESP32, sensor DHT11 y tres LEDs indicadores.
+
+---
+
+# 🌐 Comunicación
+
+El sistema utiliza el protocolo HTTP para la transmisión de datos.
+
+La ESP32 realiza una petición HTTP POST hacia Flask enviando un objeto JSON.
+
+Ejemplo:
+
+```json
+{
+    "temperatura":21.3,
+    "humedad":95,
+    "estado":"NORMAL"
+}
+```
+
+---
+
+# 📂 Estructura del Proyecto
+
+```text
+Proyecto_IoT/
+
+│
+├── app.py
+├── templates/
+│      └── index.html
+│
+├── images/
+│      ├── dashboard.png
+│      ├── hardware.jpg
+│      └── supabase.png
+│
+├── esp32/
+│      └── esp32_iot.ino
+│
+└── README.md
+```
+
+---
+
+# 🚀 Instalación
+
+## ESP32
+
+- Abrir Arduino IDE.
+- Configurar SSID y contraseña WiFi.
+- Compilar.
+- Cargar el programa en la ESP32.
+
+---
+
+## Flask
+
+Instalar dependencias
+
+```bash
+pip install flask
+pip install supabase
+```
+
+Ejecutar
+
+```bash
+python app.py
+```
+
+---
+
+## Dashboard
+
+Abrir el navegador
+
+```
+http://192.168.1.14:5000
+```
+
+---
+
+# 📊 Resultados
+
+El sistema logró:
+
+- ✔ Lectura de temperatura.
+- ✔ Lectura de humedad.
+- ✔ Activación automática de LEDs.
+- ✔ Comunicación HTTP.
+- ✔ Dashboard Web.
+- ✔ Registro en Supabase.
+- ✔ Historial de mediciones.
+- ✔ Monitoreo en tiempo real.
+
+---
+
+# 🔮 Mejoras futuras
+
+- Incorporar autenticación de usuarios.
+- Agregar gráficos históricos.
+- Implementar MQTT como protocolo alternativo.
+- Agregar notificaciones de alarma.
+- Incorporar nuevos sensores ambientales.
+- Visualización responsive para dispositivos móviles.
+
+---
+
+# 👨‍💻 Autor
+
+**Álvaro Elgueta**
+
+Proyecto desarrollado como práctica de laboratorio para la asignatura de Internet de las Cosas (IoT).
+
+Tecnologías utilizadas:
+
+ESP32 · Python · Flask · HTML · CSS · Supabase · Arduino IDE
