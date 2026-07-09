@@ -283,7 +283,7 @@ El sistema logró:
 
 # 👨‍💻 Autor
 
-**Álvaro Elgueta**
+**Mauricio Colil Figueroa**
 
 Proyecto desarrollado como práctica de laboratorio para la asignatura de Internet de las Cosas (IoT).
 
